@@ -12,3 +12,5 @@ default:
     x11forwarding: 'no'
     syslogfacility: 'AUTHPRIV'
     strictmodes: 'yes'
+    clientaliveinterval: 30
+    clientalivecountmax: 6

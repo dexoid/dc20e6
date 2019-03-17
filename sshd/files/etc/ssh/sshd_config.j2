@@ -26,8 +26,8 @@ MaxAuthTries {{ params['maxauthtries'] }}
 MaxSessions {{ params['maxsessions'] }}
 
 ###############################################################################
-ClientAliveInterval 30
-ClientAliveCountMax 6
+ClientAliveInterval {{ params['clientaliveinterval'] }}
+ClientAliveCountMax {{ params['clientalivecountmax'] }}
 TCPKeepAlive yes
 
 ###############################################################################
