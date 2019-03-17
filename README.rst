@@ -9,26 +9,26 @@ Firewalld pillar
 
 .. code-block:: yaml
 
-firewalld:
-  customservices:
-    zabbix-server:
-      ports:
-        - '10051/tcp'
-  zones:
-    public:
-      name:
-        - eth0
-      services:
-        - ssh
-        - zabbix-server
-        - http
-        - https
-        - bacula-client
-        - dns
-        - imap
-        - imaps
-        - smtp
-        - smtps
-        - pop3
-        - pop3s
-        - smtp-submission
+    firewalld:
+      customservices:
+        zabbix-server:
+          ports:
+            - '10051/tcp'
+      zones:
+        public:
+          name:
+            - eth0
+          services:
+            - ssh
+            - zabbix-server
+            - http
+            - https
+            - bacula-client
+            - dns
+            - imap
+            - imaps
+            - smtp
+            - smtps
+            - pop3
+            - pop3s
+            - smtp-submission
