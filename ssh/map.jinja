@@ -1,0 +1,24 @@
+{% import_yaml 'ssh/defaults.yml' as default_settings %}
+
+{% set map_ssh_pillar = salt['pillar.get'](
+        'ssh',
+        default=default_settings.default.ssh,
+        merge=True
+    ) 
+%}
+
+{% set map_ssh_settings = salt['grains.filter_by']({
+    'Debian': {
+        'service': 'ssh',
+        'conf': '/etc/ssh/sshd_config',
+        'motd': 'no',
+        'sftp_server_path': '/usr/lib/openssh/sftp-server'
+    },
+    'CentOS': {
+        'service': 'sshd',
+        'conf': '/etc/ssh/sshd_config',
+        'motd': 'yes',
+        'sftp_server_path': '/usr/libexec/openssh/sftp-server'
+    }
+}, grain='os', merge=map_ssh_pillar)
+%}

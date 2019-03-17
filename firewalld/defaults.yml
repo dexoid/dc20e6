@@ -1,0 +1,4 @@
+default:
+  firewalld:
+    customservices: {}
+    zones: {}

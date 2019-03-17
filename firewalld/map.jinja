@@ -1,0 +1,9 @@
+{% import_yaml 'firewalld/defaults.yml' as default_settings %}
+
+{% set map_firewalld_settings = salt['pillar.get'](
+        'firewalld',
+        default=default_settings.default.firewalld,
+        merge=True
+    ) 
+%}
+

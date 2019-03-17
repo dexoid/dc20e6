@@ -1,0 +1,14 @@
+default:
+  ssh:
+    port: '22'
+    permitrootlogin: 'without-password'
+    passwordauthentication: 'no'
+    loglevel: 'VERBOSE'
+    maxauthtries: 2
+    maxsessions: 5
+    challengeresponseauthentication: 'no'
+    allowagentforwarding: 'no'
+    allowtcpforwarding: 'no'
+    x11forwarding: 'no'
+    syslogfacility: 'AUTHPRIV'
+    strictmodes: 'yes'
