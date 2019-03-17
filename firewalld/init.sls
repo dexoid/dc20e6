@@ -38,5 +38,5 @@ firewalld:
     - rich_rules:
       {{ prepare_data(data, 'rich_rules') }}
     - port_fwd:
-      {{ prepare_data(data, 'зщке_ацв') }}
+      {{ prepare_data(data, 'port_fwd') }}
 {% endfor %}
