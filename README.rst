@@ -1,6 +1,23 @@
-==================================================================
-Примеры состояний firewalld and sshd states для 0x03 митапа dc20e6
-==================================================================
+===================================================================================
+Примеры состояний firewalld и sshd states в готовом окружении для их разворачивания
+===================================================================================
+
+Требования
+==========
+
+* [Vagrant](https://www.vagrantup.com/)
+* [Vbguest plugin for Vagrant](https://github.com/dotless-de/vagrant-vbguest)
+* [VirtualBox](https://www.virtualbox.org/)
+
+Быстрый старт
+=============
+
+# Склонируйте проект и перейдите в его директорию
+# Отредактируйте переменные в *config.yml*
+# Отредактируйте/создайте pillar для удалённого сервера в *salt/pillar*
+# Выполните *vagrant up*
+# Добавьте выданный вам на прошлом шаге публичный ключ на удалённый сервер
+# Выполните *vagrant provision*
 
 Примеры pillars
 =======================
@@ -20,23 +37,13 @@ firewalld pillar:
             - eth0
           services:
             - ssh
-            - zabbix-server
             - http
             - https
-            - bacula-client
-            - dns
-            - imap
-            - imaps
-            - smtp
-            - smtps
-            - pop3
-            - pop3s
-            - smtp-submission
-          masquerade: True
+          masquerade: False
           port_fwd:
             - 443:1935:tcp
           rich_rules:
-            - 'rule family="ipv4" source address="1.2.3.4/32" service name="zabbix-agent" accept'
+            - 'rule family="ipv4" source address="1.2.3.4/32" service name="bacula-client" accept'
 
 sshd pillar:
 

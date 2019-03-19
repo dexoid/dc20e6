@@ -1,0 +1,6 @@
+settings:
+  hostname: test
+  saltdir: salt
+  ip: 192.168.33.2
+  remoteip: 155.138.211.177
+  remotehostname: webserver

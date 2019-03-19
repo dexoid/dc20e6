@@ -1,0 +1,69 @@
+Port {{ params['port'] }}
+###############################################################################
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+###############################################################################
+AuthorizedKeysFile .ssh/authorized_keys
+PasswordAuthentication {{ params['passwordauthentication'] }}
+ChallengeResponseAuthentication {{ params['challengeresponseauthentication'] }}
+PermitRootLogin {{ params['permitrootlogin'] }}
+PubkeyAuthentication yes
+RSAAuthentication yes
+
+###############################################################################
+LogLevel {{ params['loglevel'] }}
+SyslogFacility {{ params['syslogfacility'] }}
+
+###############################################################################
+UsePrivilegeSeparation sandbox
+RekeyLimit 1G 1H
+
+###############################################################################
+MaxAuthTries {{ params['maxauthtries'] }}
+MaxSessions {{ params['maxsessions'] }}
+
+###############################################################################
+ClientAliveInterval {{ params['clientaliveinterval'] }}
+ClientAliveCountMax {{ params['clientalivecountmax'] }}
+TCPKeepAlive yes
+
+###############################################################################
+UsePAM yes
+StrictModes {{ params['strictmodes'] }}
+PrintMotd {{ params['motd'] }}
+Compression no
+Subsystem sftp {{ params['sftp_server_path'] }} -f AUTHPRIV -l INFO
+
+###############################################################################
+AllowAgentForwarding {{ params['allowagentforwarding'] }}
+AllowTcpForwarding {{ params['allowtcpforwarding'] }}
+X11Forwarding {{ params['x11forwarding'] }}
+
+###############################################################################
+AcceptEnv LANG LC_*
+
+###############################################################################
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+{#- Debian 8 not support HostKeyAlgorithms option #}
+{%- if not (salt['grains.get']('os') == 'Debian' and salt['grains.get']('osmajorrelease') < 9) %} 
+HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-dss-cert-v01@openssh.com,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-ed25519,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ssh-dss
+{%- endif %}
+
+###############################################################################
+Match address 192.168.0.0/16,10.0.0.0/8
+  PasswordAuthentication yes
+  PermitRootLogin yes
+
+{%- for match, matchparams in params.get('matches', {}).items()|sort %}
+{{ match }}
+{%- for matchkey, matchvalue in matchparams.items()|sort %}
+  {{ matchkey }} {{ matchvalue }}
+{%- endfor %}
+{%- endfor %} 
+
+###############################################################################

@@ -7,7 +7,7 @@ openssh-server:
 
 openssh-server_run:
   service.running:
-    - name: {{ map_ssh_settings['service'] }}
+    - name: {{ map_sshd_settings['service'] }}
     - enable: True
 
 openssh-server_conf:
@@ -17,7 +17,6 @@ openssh-server_conf:
     - template: jinja
     - user: root
     - custom:
-      params: {{ map_sshd_settings }}
-      test: {{ map_sshd_settings['motd'] }}
+      params: {{ map_sshd_settings| tojson }}
     - watch_in:
       - service: openssh-server_run
